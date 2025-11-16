@@ -56,8 +56,8 @@ function App() {
     <>
       
       <Routes>
-          <Route path="/"element={<Homepage isAuthenticated={isAuthenticated}  />}/>
-            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />}></Route>
+          <Route path="/"element={<Homepage />}/>
+            <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup/>}></Route>
            
 
@@ -67,9 +67,9 @@ function App() {
             </Route>
            
             {/* <Route path="/upload" element={<UploadMaterial isAuthenticated={isAuthenticated} />}></Route> */}
-            <Route path="/disp" element={<DispStudyMaterial isAuthenticated={isAuthenticated} />}></Route>
-            <Route path='/about' element={<About isAuthenticated={isAuthenticated} />}></Route>
-            <Route path='/contact' element={<Contact isAuthenticated={isAuthenticated}  />}></Route>
+            <Route path="/disp" element={<DispStudyMaterial />}></Route>
+            <Route path='/about' element={<About />}></Route>
+            <Route path='/contact' element={<Contact />}></Route>
 
             <Route path="/adminlogin" element={<AdminLogin/>}></Route>
             <Route path="/adminDashboard" element={<AdminDashboard />}>
