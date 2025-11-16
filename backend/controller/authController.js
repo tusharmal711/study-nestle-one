@@ -35,7 +35,7 @@ const loginUser=async(req,res)=>{
             throw new Error("Invalid Credentials");
 
         const token = jwt.sign({ id:people.id,emailId:people.emailId}, process.env.JWT_KEY,{expiresIn:"10h"});
-        res.cookie("token",token,{httpOnly:true,secure:true, sameSite: "lax"});
+        res.cookie("token",token,{httpOnly:true,secure:true, sameSite: "none"});
       
       res.status(200).json({ message: "Login Successful" ,loggedIn:true});
     }catch(err){
