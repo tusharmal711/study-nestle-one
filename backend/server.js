@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 var cors = require('cors'); 
 const allowedOrigins = [
 
-  "http://localhost:5173","https://feedbacker-student.vercel.app"
+  "http://localhost:5173","https://study-nestle-one.vercel.app"
 ];
 app.use(cors({
   origin: function (origin, callback) {
