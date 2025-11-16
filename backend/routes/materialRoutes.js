@@ -11,13 +11,13 @@ router.get("/getMaterial", getMaterials);
 router.patch("/updateMaterial/:id", authMiddleware, updateMaterial);
 router.delete("/deleteMaterial/:id", authMiddleware, deleteMaterial);
 
-router.get("/checkAuth", authMiddleware, (req, res) => {
-  res.status(200).json({ 
-    message: "User is authenticated", 
-    user: req.user ,
-    loggedIn:true
-  });
-});
+// router.get("/checkAuth", authMiddleware, (req, res) => {
+//   res.status(200).json({ 
+//     message: "User is authenticated", 
+//     user: req.user ,
+//     loggedIn:true
+//   });
+// });
 
 module.exports = router;
 
