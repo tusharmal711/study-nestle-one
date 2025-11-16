@@ -12,7 +12,7 @@ const registerUser=async(req,res)=>{
     try{
         console.log("Received registration data:", req.body);
         validateuser(req.body);
-          
+
         //req.body.password=await bcrypt.hash(req.body.password,10);
         const newUser = await User.create(req.body);
         console.log("User created successfully:", newUser);
@@ -22,41 +22,27 @@ const registerUser=async(req,res)=>{
        res.status(400).json({ error: err.message });
     }
 }
-const loginUser = async (req, res) => {
-  try {
-    const { emailId, password } = req.body;
 
-    // 1. Check if user exists
-    const people = await User.findOne({ emailId });
-    if (!people) {
-      return res.status(400).json({ error: "Invalid Credentials" });
+const loginUser=async(req,res)=>{
+    try{
+
+        const people=  await User.findOne({ emailId: req.body.emailId });
+        if(!(req.body.emailId === people.emailId))
+            throw new Error("Invalid Credentials");
+        
+        const isAllowed=await  bcrypt.compare(req.body.password,people.password);
+        if(!(isAllowed))
+            throw new Error("Invalid Credentials");
+
+        const token = jwt.sign({ id:people.id,emailId:people.emailId}, process.env.JWT_KEY,{expiresIn:"10h"});
+        res.cookie("token",token,{httpOnly:true,secure:true, sameSite: "lax"});
+      
+      res.status(200).json({ message: "Login Successful" ,loggedIn:true});
+    }catch(err){
+        res.status(400).json({ error: err.message });
+
     }
-
-    // 2. Compare password
-    const isAllowed = await bcrypt.compare(password, people.password);
-    if (!isAllowed) {
-      return res.status(400).json({ error: "Invalid Credentials" });
-    }
-
-    // 3. Create token
-    const token = jwt.sign(
-      { id: people.id, emailId: people.emailId },
-      process.env.JWT_KEY,
-      { expiresIn: "10h" }
-    );
-
-    // 4. Set cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Only secure in production
-      sameSite: "lax",
-    });
-
-    res.status(200).json({ message: "Login Successful", loggedIn: true });
-  } catch (err) {
-    res.status(500).json({ error: "Server Error" });
-  }
-};
+}
 
 const logoutUser=async(req,res)=>{
     try{
