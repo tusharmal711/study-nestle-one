@@ -56,7 +56,7 @@ function App() {
     <>
       
       <Routes>
-          <Route path="/"element={<Homepage isAuthenticated={isAuthenticated}  />}/>
+          <Route path="/"element={<Homepage />}/>
             <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated}/>}></Route>
             <Route path="/signup" element={<Signup/>}></Route>
            
